@@ -1,7 +1,5 @@
-node_modules
-src
-public
 .git
-.env
-.env.*
+.gitignore
+node_modules
 *.log
+.DS_Store
