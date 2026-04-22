@@ -1,5 +1,7 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "devCommand": "vite"
+  "devCommand": "vite",
+  "cleanUrls": true,
+  "trailingSlash": false
 }
