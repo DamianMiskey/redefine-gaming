@@ -153,6 +153,7 @@ const Hero = () => {
             src={getVideoSrc(currentIndex)}
             loop
             muted
+            autoPlay
             playsInline
             crossOrigin="anonymous"
             id="next-video"
