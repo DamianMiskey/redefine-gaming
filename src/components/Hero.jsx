@@ -60,21 +60,29 @@ const Hero = () => {
   useGSAP(
     () => {
       if (hasClicked) {
-        gsap.set("#next-video", { visibility: "visible" });
+        // Make video visible but transparent/small
+        gsap.set("#next-video", {
+          visibility: "visible",
+          opacity: 1,
+          scale: 0.5,
+        });
+
+        // Play video immediately when visible
+        if (mainVdRef.current) {
+          mainVdRef.current.currentTime = 0;
+          mainVdRef.current.play();
+        }
+
+        // Animate to full screen
         gsap.to("#next-video", {
-          transformOrigin: "center center",
           scale: 1,
           width: "100%",
           height: "100%",
           duration: 1,
           ease: "power1.inOut",
-          onStart: () => {
-            if (mainVdRef.current) {
-              mainVdRef.current.currentTime = 0;
-              mainVdRef.current.play();
-            }
-          },
         });
+
+        // Fade out old video
         gsap.from("#current-video", {
           transformOrigin: "center center",
           scale: 0,
@@ -153,7 +161,6 @@ const Hero = () => {
             src={getVideoSrc(currentIndex)}
             loop
             muted
-            autoPlay
             playsInline
             crossOrigin="anonymous"
             id="next-video"
