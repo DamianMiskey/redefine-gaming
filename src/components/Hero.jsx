@@ -114,7 +114,8 @@ const Hero = () => {
                   id="current-video"
                   className="size-64 origin-center scale-150 object-cover object-center"
                   onLoadedData={handleVideoLoad}
-                  preload="none"
+                  preload="auto"
+                  onCanPlay={handleVideoLoad}
                 />
               </div>
             </VideoPreview>
@@ -129,7 +130,8 @@ const Hero = () => {
             id="next-video"
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
             onLoadedData={handleVideoLoad}
-            preload="metadata"
+            preload="auto"
+            onCanPlay={handleVideoLoad}
           />
           <video
             src={getVideoSrc(
@@ -142,6 +144,7 @@ const Hero = () => {
             className="absolute left-0 top-0 size-full object-cover object-center"
             onLoadedData={handleVideoLoad}
             preload="auto"
+            onCanPlay={handleVideoLoad}
           />
         </div>
 
