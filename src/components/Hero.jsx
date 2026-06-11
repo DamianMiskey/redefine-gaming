@@ -20,6 +20,9 @@ const Hero = () => {
   const currentVdRef = useRef(null);
   const mainVdRef = useRef(null);
 
+  const getVideoSrc = (index) =>
+    `https://xjnsrzeygmfq1xba.public.blob.vercel-storage.com/hero-${index}.mp4`;
+
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
   };
@@ -29,6 +32,15 @@ const Hero = () => {
       setLoading(false);
     }
   }, [loadedVideos]);
+
+  // Preload all videos on mount
+  useEffect(() => {
+    for (let i = 1; i <= totalVideos; i++) {
+      const video = document.createElement("video");
+      video.src = getVideoSrc(i);
+      video.preload = "auto";
+    }
+  }, []);
 
   const handleMiniVdClick = () => {
     setHasClicked(true);
@@ -49,28 +61,8 @@ const Hero = () => {
           ease: "power1.inOut",
           onStart: () => {
             if (mainVdRef.current) {
-              const playVideo = () => {
-                mainVdRef.current.currentTime = 0;
-                mainVdRef.current.play();
-              };
-
-              // readyState 3 = HAVE_FUTURE_DATA (better buffering)
-              if (mainVdRef.current.readyState >= 3) {
-                playVideo();
-              } else {
-                // Wait for canplaythrough for smoother playback
-                mainVdRef.current.addEventListener(
-                  "canplaythrough",
-                  playVideo,
-                  { once: true },
-                );
-                // Fallback to canplay if canplaythrough takes too long (2 seconds)
-                setTimeout(() => {
-                  if (mainVdRef.current.readyState >= 2) {
-                    playVideo();
-                  }
-                }, 2000);
-              }
+              mainVdRef.current.currentTime = 0;
+              mainVdRef.current.play();
             }
           },
         });
@@ -105,9 +97,6 @@ const Hero = () => {
       },
     });
   });
-
-  const getVideoSrc = (index) =>
-    `https://xjnsrzeygmfq1xba.public.blob.vercel-storage.com/hero-${index}.mp4`;
 
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
