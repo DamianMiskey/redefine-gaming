@@ -49,8 +49,19 @@ const Hero = () => {
           ease: "power1.inOut",
           onStart: () => {
             if (mainVdRef.current) {
-              mainVdRef.current.currentTime = 0;
-              mainVdRef.current.play();
+              if (mainVdRef.current.readyState >= 2) {
+                mainVdRef.current.currentTime = 0;
+                mainVdRef.current.play();
+              } else {
+                mainVdRef.current.addEventListener(
+                  "canplay",
+                  () => {
+                    mainVdRef.current.currentTime = 0;
+                    mainVdRef.current.play();
+                  },
+                  { once: true },
+                );
+              }
             }
           },
         });
