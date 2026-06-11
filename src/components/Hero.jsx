@@ -17,7 +17,8 @@ const Hero = () => {
   const [loadedVideos, setLoadedVideos] = useState(0);
 
   const totalVideos = 4;
-  const nextVdRef = useRef(null);
+  const currentVdRef = useRef(null);
+  const mainVdRef = useRef(null);
 
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
@@ -46,7 +47,12 @@ const Hero = () => {
           height: "100%",
           duration: 1,
           ease: "power1.inOut",
-          onStart: () => nextVdRef.current.play(),
+          onStart: () => {
+            if (mainVdRef.current) {
+              mainVdRef.current.currentTime = 0;
+              mainVdRef.current.play();
+            }
+          },
         });
         gsap.from("#current-video", {
           transformOrigin: "center center",
@@ -80,7 +86,8 @@ const Hero = () => {
     });
   });
 
-  const getVideoSrc = (index) => `/videos/hero-${index}.mp4`;
+  const getVideoSrc = (index) =>
+    `https://xjnsrzeygmfq1xba.public.blob.vercel-storage.com/hero-${index}.mp4`;
 
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
@@ -107,7 +114,7 @@ const Hero = () => {
                 className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
               >
                 <video
-                  ref={nextVdRef}
+                  ref={currentVdRef}
                   src={getVideoSrc((currentIndex % totalVideos) + 1)}
                   loop
                   muted
@@ -115,13 +122,14 @@ const Hero = () => {
                   id="current-video"
                   className="size-64 origin-center scale-150 object-cover object-center"
                   onLoadedData={handleVideoLoad}
+                  preload="auto"
                 />
               </div>
             </VideoPreview>
           </div>
 
           <video
-            ref={nextVdRef}
+            ref={mainVdRef}
             src={getVideoSrc(currentIndex)}
             loop
             muted
@@ -129,6 +137,7 @@ const Hero = () => {
             id="next-video"
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
             onLoadedData={handleVideoLoad}
+            preload="auto"
           />
           <video
             src={getVideoSrc(
@@ -140,6 +149,7 @@ const Hero = () => {
             playsInline
             className="absolute left-0 top-0 size-full object-cover object-center"
             onLoadedData={handleVideoLoad}
+            preload="auto"
           />
         </div>
 
