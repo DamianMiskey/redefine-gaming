@@ -130,6 +130,7 @@ const Hero = () => {
                   loop
                   muted
                   playsInline
+                  crossOrigin="anonymous"
                   id="current-video"
                   className="size-64 origin-center scale-150 object-cover object-center"
                   onLoadedData={handleVideoLoad}
@@ -145,6 +146,7 @@ const Hero = () => {
             loop
             muted
             playsInline
+            crossOrigin="anonymous"
             id="next-video"
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
             onLoadedData={handleVideoLoad}
@@ -158,6 +160,7 @@ const Hero = () => {
             loop
             muted
             playsInline
+            crossOrigin="anonymous"
             className="absolute left-0 top-0 size-full object-cover object-center"
             onLoadedData={handleVideoLoad}
             preload="auto"
