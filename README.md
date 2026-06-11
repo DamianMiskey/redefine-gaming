@@ -1,12 +1,87 @@
-# React + Vite
+# Redefine Gaming
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, high-performance marketing website showcasing next-generation gaming experiences. Built with React, Vite, and Tailwind CSS, featuring smooth animations and an engaging user experience.
 
-Currently, two official plugins are available:
+## 🎮 About
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Redefine Gaming is a cutting-edge showcase website that brings together stunning visuals, compelling storytelling, and seamless interactions to present innovative gaming concepts. The site features multiple sections including hero showcase, feature highlights, brand story, and contact channels.
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Lightning-fast performance** - Built with Vite for rapid development and optimized production builds
+- **Smooth animations** - GSAP-powered animations for engaging visual transitions
+- **Responsive design** - Tailwind CSS for a mobile-first, responsive layout
+- **Modern tech stack** - React 19 with the latest development tooling
+- **Containerized** - Docker support for easy deployment
+
+## 🛠️ Tech Stack
+
+- **Frontend Framework**: React 19
+- **Build Tool**: Vite 6
+- **Styling**: Tailwind CSS
+- **Animation**: GSAP (GreenSock Animation Platform)
+- **Icons**: React Icons
+- **Linting**: ESLint
+- **Container**: Docker & Docker Compose
+
+## 📦 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Docker
+
+```bash
+# Build and run with Docker Compose
+docker-compose up
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── About.jsx         # About section
+│   ├── Contact.jsx       # Contact section
+│   ├── Features.jsx      # Features showcase
+│   ├── Footer.jsx        # Footer
+│   ├── Hero.jsx          # Hero banner
+│   ├── Navbar.jsx        # Navigation
+│   ├── Story.jsx         # Brand story
+│   └── VideoPreview.jsx  # Video component
+├── App.jsx               # Main app component
+├── main.jsx              # Entry point
+└── index.css             # Global styles
+```
+
+## 🚀 Development
+
+```bash
+# Run linter
+npm run lint
+
+# Dev server with HMR
+npm run dev
+```
+
+## 📄 License
+
+This project is open source and available under the MIT License.
