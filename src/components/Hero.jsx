@@ -17,11 +17,7 @@ const Hero = () => {
   const [loadedVideos, setLoadedVideos] = useState(0);
 
   const totalVideos = 4;
-  const currentVdRef = useRef(null);
-  const mainVdRef = useRef(null);
-
-  const getVideoSrc = (index) =>
-    `https://xjnsrzeygmfq1xba.public.blob.vercel-storage.com/hero-${index}.mp4`;
+  const nextVdRef = useRef(null);
 
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
@@ -33,24 +29,6 @@ const Hero = () => {
     }
   }, [loadedVideos]);
 
-  // Fallback timeout for mobile (iOS doesn't always fire onLoadedData)
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setLoading(false);
-    }, 8000); // Force stop loading after 8 seconds
-
-    return () => clearTimeout(timeoutId);
-  }, []);
-
-  // Preload all videos on mount
-  useEffect(() => {
-    for (let i = 1; i <= totalVideos; i++) {
-      const video = document.createElement("video");
-      video.src = getVideoSrc(i);
-      video.preload = "auto";
-    }
-  }, []);
-
   const handleMiniVdClick = () => {
     setHasClicked(true);
 
@@ -60,29 +38,16 @@ const Hero = () => {
   useGSAP(
     () => {
       if (hasClicked) {
-        // Make video visible but transparent/small
-        gsap.set("#next-video", {
-          visibility: "visible",
-          opacity: 1,
-          scale: 0.5,
-        });
-
-        // Play video immediately when visible
-        if (mainVdRef.current) {
-          mainVdRef.current.currentTime = 0;
-          mainVdRef.current.play();
-        }
-
-        // Animate to full screen
+        gsap.set("#next-video", { visibility: "visible" });
         gsap.to("#next-video", {
+          transformOrigin: "center center",
           scale: 1,
           width: "100%",
           height: "100%",
           duration: 1,
           ease: "power1.inOut",
+          onStart: () => nextVdRef.current.play(),
         });
-
-        // Fade out old video
         gsap.from("#current-video", {
           transformOrigin: "center center",
           scale: 0,
@@ -115,6 +80,8 @@ const Hero = () => {
     });
   });
 
+  const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
+
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
       {loading && (
@@ -140,48 +107,37 @@ const Hero = () => {
                 className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
               >
                 <video
-                  ref={currentVdRef}
+                  ref={nextVdRef}
                   src={getVideoSrc((currentIndex % totalVideos) + 1)}
                   loop
                   muted
-                  playsInline
-                  crossOrigin="anonymous"
                   id="current-video"
                   className="size-64 origin-center scale-150 object-cover object-center"
                   onLoadedData={handleVideoLoad}
-                  onCanPlay={handleVideoLoad}
-                  preload="auto"
                 />
               </div>
             </VideoPreview>
           </div>
 
           <video
-            ref={mainVdRef}
+            ref={nextVdRef}
             src={getVideoSrc(currentIndex)}
             loop
             muted
-            playsInline
-            crossOrigin="anonymous"
             id="next-video"
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
             onLoadedData={handleVideoLoad}
-            onCanPlay={handleVideoLoad}
-            preload="auto"
           />
           <video
             src={getVideoSrc(
               currentIndex === totalVideos - 1 ? 1 : currentIndex,
             )}
             autoPlay
+            playsInline
             loop
             muted
-            playsInline
-            crossOrigin="anonymous"
             className="absolute left-0 top-0 size-full object-cover object-center"
             onLoadedData={handleVideoLoad}
-            onCanPlay={handleVideoLoad}
-            preload="auto"
           />
         </div>
 
