@@ -33,6 +33,15 @@ const Hero = () => {
     }
   }, [loadedVideos]);
 
+  // Fallback timeout for mobile (iOS doesn't always fire onLoadedData)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setLoading(false);
+    }, 8000); // Force stop loading after 8 seconds
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   // Preload all videos on mount
   useEffect(() => {
     for (let i = 1; i <= totalVideos; i++) {
@@ -132,6 +141,7 @@ const Hero = () => {
                   id="current-video"
                   className="size-64 origin-center scale-150 object-cover object-center"
                   onLoadedData={handleVideoLoad}
+                  onCanPlay={handleVideoLoad}
                   preload="auto"
                 />
               </div>
@@ -148,6 +158,7 @@ const Hero = () => {
             id="next-video"
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
             onLoadedData={handleVideoLoad}
+            onCanPlay={handleVideoLoad}
             preload="auto"
           />
           <video
@@ -161,6 +172,7 @@ const Hero = () => {
             crossOrigin="anonymous"
             className="absolute left-0 top-0 size-full object-cover object-center"
             onLoadedData={handleVideoLoad}
+            onCanPlay={handleVideoLoad}
             preload="auto"
           />
         </div>
