@@ -49,18 +49,27 @@ const Hero = () => {
           ease: "power1.inOut",
           onStart: () => {
             if (mainVdRef.current) {
-              if (mainVdRef.current.readyState >= 2) {
+              const playVideo = () => {
                 mainVdRef.current.currentTime = 0;
                 mainVdRef.current.play();
+              };
+
+              // readyState 3 = HAVE_FUTURE_DATA (better buffering)
+              if (mainVdRef.current.readyState >= 3) {
+                playVideo();
               } else {
+                // Wait for canplaythrough for smoother playback
                 mainVdRef.current.addEventListener(
-                  "canplay",
-                  () => {
-                    mainVdRef.current.currentTime = 0;
-                    mainVdRef.current.play();
-                  },
+                  "canplaythrough",
+                  playVideo,
                   { once: true },
                 );
+                // Fallback to canplay if canplaythrough takes too long (2 seconds)
+                setTimeout(() => {
+                  if (mainVdRef.current.readyState >= 2) {
+                    playVideo();
+                  }
+                }, 2000);
               }
             }
           },
