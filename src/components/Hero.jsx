@@ -80,7 +80,7 @@ const Hero = () => {
     });
   });
 
-  const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
+  const getVideoSrc = (index) => `https://xjnsrzeygmfq1xba.public.blob.vercel-storage.com/hero-${index}.mp4`;
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
       {loading && (
@@ -115,7 +115,6 @@ const Hero = () => {
                   className="size-64 origin-center scale-150 object-cover object-center"
                   onLoadedData={handleVideoLoad}
                   preload="auto"
-                  onCanPlay={handleVideoLoad}
                 />
               </div>
             </VideoPreview>
@@ -131,7 +130,6 @@ const Hero = () => {
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
             onLoadedData={handleVideoLoad}
             preload="auto"
-            onCanPlay={handleVideoLoad}
           />
           <video
             src={getVideoSrc(
@@ -144,7 +142,6 @@ const Hero = () => {
             className="absolute left-0 top-0 size-full object-cover object-center"
             onLoadedData={handleVideoLoad}
             preload="auto"
-            onCanPlay={handleVideoLoad}
           />
         </div>
 
